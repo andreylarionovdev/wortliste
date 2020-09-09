@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Wortliste</title>
+  </head>
+  <body>
+    <ul>
+      {% for word in words %}
+        <li>
+          <a href="{% url 'detail' word.id %}">
+            {% if word.artikel %}
+              {{ word.artikel.text}}, {{ word.text }}
+            {% else %}
+              {{ word.text }}
+            {% endif %}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+</body>
+</html>
