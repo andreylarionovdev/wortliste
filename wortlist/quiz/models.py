@@ -35,14 +35,20 @@ class Word(models.Model):
         return f"{artikel}{self.text} - {self.translate}"
 
     text = models.CharField(max_length=500)
-    artikel = models.ForeignKey(Artikel, on_delete=models.CASCADE, null=True)
-    plural_ending = models.CharField(max_length=10)
+    artikel = models.ForeignKey(Artikel, on_delete=models.CASCADE, null=True, blank=True)
+    plural_ending = models.CharField(max_length=10, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
-    translate = models.CharField(max_length=500)
+    translate = models.CharField(max_length=500, blank=True)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     category = models.ForeignKey(WordCategory, on_delete=models.CASCADE)
-    verb_form = models.ForeignKey(VerbForm, on_delete=models.CASCADE, null=True)
-    verb_inf = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    verb_form = models.ForeignKey(VerbForm, on_delete=models.CASCADE, null=True, blank=True)
+    verb_inf = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+
+    def is_noun(self):
+        return self.category.name == 'noun'
+
+    def is_verb(self):
+        return self.category.name == 'verb'
 
 
 class Sentence(models.Model):
