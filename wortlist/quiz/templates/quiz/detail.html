@@ -12,15 +12,26 @@
 </head>
 <body>
 
-  <h1 class="card__header">
-    {% if word.category.name == 'noun' %}
-      {{ word.artikel.text }}, {{ word.text }}, -{{ word.plural_ending }}
-    {% endif %}
+  <article class="card">
+    <h1 class="card__header">
+      {% if word.category.name == 'noun' %}
+        {{ word.artikel.text }}, {{ word.text }}, -{{ word.plural_ending }}
+      {% endif %}
 
-    {% if word.category.name == 'verb' %}
-      {{ word.text }}
-    {% endif %}
-  </h1>
+      {% if word.category.name == 'verb' %}
+        {{ word.text }}
+      {% endif %}
+    </h1>
+    <ol>
+      {% if sentences|length > 0%}
+        {% for sentence in sentences %}
+          <li>
+            {{ sentence.text }}.
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ol>
+  </article>
 
 </body>
 </html>

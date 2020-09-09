@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Word
+from .models import Word, Sentence
 
 
 def index(request):
@@ -9,4 +9,5 @@ def index(request):
 
 def detail(request, word_id):
     word = get_object_or_404(Word, pk=word_id)
-    return render(request, 'quiz/detail.html', {'word': word})
+    sentences = Sentence.objects.filter(word=word)
+    return render(request, 'quiz/detail.html', {'word': word, 'sentences': sentences})
