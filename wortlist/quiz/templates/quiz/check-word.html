@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ word.text }}</title>
+</head>
+<body>
+  {% if error_message %}
+    <p>{{ error_message }}</p>
+  {% endif %}
+  <form action="{% url 'check_word' word.id %}" method="POST">
+    {% csrf_token %}
+    <h2>
+      {% if word.is_noun %}
+        <input type="text" name="artikel">, {{ word.text }}, <input type="text" name="plural_ending">
+      {% else %}
+        {{ word.text }}
+      {% endif %}
+    </h2>
+    <p>
+      <textarea cols="50" rows="10" name="sentence"></textarea>
+    </p>
+    <p>
+      <input type="submit" value="Check">
+    </p>
+  </form>
+</body>
+</html>
