@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
+{% extends 'quiz/layout.html' %}
+
+{% block head %}
   <title>
     {% if word.artikel %}
       {{ word.artikel.text}}, {{ word.text }}
@@ -9,9 +8,9 @@
       {{ word.text }}
     {% endif %}
   </title>
-</head>
-<body>
+{% endblock %}
 
+{% block body %}
   <article class="card">
     <h1 class="card__header">
       {% if word.category.name == 'noun' %}
@@ -37,9 +36,8 @@
       {% endif %}
     </ol>
     <p>
-      <a href="{% url 'check_word' word.id %}">Check</a>
+      <a href="{% url 'index' %}"><<</a>
+      <a href="{% url 'check_word' word.id %}">Challenge</a>
     </p>
   </article>
-
-</body>
-</html>
+{% endblock %}

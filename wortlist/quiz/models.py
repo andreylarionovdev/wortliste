@@ -31,8 +31,8 @@ class Artikel(models.Model):
 
 class Word(models.Model):
     def __str__(self):
-        artikel = f"{self.artikel.text}, " if self.artikel else ""
-        return f"{artikel}{self.text} - {self.translate}"
+        artikel = f", {self.artikel.text}" if self.artikel else ""
+        return f"{self.text}{artikel} - {self.translate}"
 
     text = models.CharField(max_length=500)
     artikel = models.ForeignKey(Artikel, on_delete=models.CASCADE, null=True, blank=True)

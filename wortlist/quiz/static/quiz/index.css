@@ -1,0 +1,33 @@
+html {
+  font-family: 'Courier New', Arial;
+  background: rgb(232, 220, 222);
+  color: rgb(53, 54, 58);
+}
+textarea,
+input {
+  font-family: 'Courier New', Arial;
+  font-size: 16px;
+  background: rgb(232, 220, 222);
+  color: rgb(53, 54, 58);
+}
+ul {
+  list-style: none;
+}
+a {
+  color: rgb(107, 72, 77)
+}
+a:hover {
+  color: rgb(153, 102, 110);
+}
+
+@media(prefers-color-scheme: dark) {
+  html {
+    background: rgb(53, 54, 58);
+    color: rgb(232, 220, 222);
+  }
+  textarea,
+  input {
+    background: rgb(79, 75, 65);
+    color: rgb(232, 220, 222);
+  }
+}

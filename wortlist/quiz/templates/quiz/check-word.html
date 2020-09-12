@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
+{% extends 'quiz/layout.html' %}
+
+{% block head %}
   <title>{{ word.text }}</title>
-</head>
-<body>
+{% endblock %}
+
+{% block body %}
   {% if error_message %}
     <p>{{ error_message }}</p>
   {% endif %}
@@ -22,7 +22,7 @@
     </p>
     <p>
       <input type="submit" value="Check">
+      <a href="{% url 'word_detail' word.id %}">Hint</a>
     </p>
   </form>
-</body>
-</html>
+{% endblock %}
