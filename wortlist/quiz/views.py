@@ -22,13 +22,23 @@ def check_word(request, word_id):
     word = get_object_or_404(Word, pk=word_id)
     context = {'word': word}
     try:
+        # POST validation
         Sentence.objects.get(word=word, text=request.POST['sentence'])
+        if word.is_noun():
+            artikel = request.POST['artikel']
+            plural_ending = request.POST['plural_ending']
+            word = Word.objects.get(id=word_id)
+            if (word.artikel.text != artikel) or (word.plural_ending != plural_ending):
+                raise Word.DoesNotExist
     except KeyError:
+        # GET
         return render(request, 'quiz/check-word.html', context)
-    except Sentence.DoesNotExist:
-        context['error_message'] = 'Try again!'
+    except (Sentence.DoesNotExist, Word.DoesNotExist):
+        # POST with validation error
+        context['error_message'] = 'noch einmal!'
         return render(request, 'quiz/check-word.html', context)
     else:
+        # POST without validation error
         next_word = get_next_word_for_check(word)
         return HttpResponseRedirect(reverse('check_word', args=(next_word.id,)))
 
