@@ -1,10 +1,13 @@
 {% extends 'quiz/layout.html' %}
 
 {% block head %}
-  <title>Wortliste</title>
+  <title>Wortschatz B1 Goethe-Institut</title>
 {% endblock %}
 
 {% block body %}
+  <p>
+    Dictionary contains {{ words|length }} words.
+  </p>
   <ul>
     {% for word in words %}
       <li>
