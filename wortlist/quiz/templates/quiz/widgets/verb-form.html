@@ -1,0 +1,39 @@
+<article class="form form_type_verb">
+  <header class="form__header">
+    <p class="form__word-text">
+      {{ word.text }}
+    </p>
+  </header>
+  <p class="form__input-group form__input-group_type_verb-form">
+    {{ form.praesens }}
+    {% if form.praesens.errors %}
+      {% for error in form.praesens.errors %}
+        <span class="form__input-error">{{ error|escape }}</span>
+      {% endfor %}
+    {% endif %}
+  </p>
+  <p class="form__input-group form__input-group_type_verb-form">
+    {{ form.praeteritum }}
+    {% if form.praeteritum.errors %}
+      {% for error in form.praeteritum.errors %}
+        <span class="form__input-error">{{ error|escape }}</span>
+      {% endfor %}
+    {% endif %}
+  </p>
+  <p class="form__input-group form__input-group_type_verb-form">
+    {{ form.perfekt }}
+    {% if form.perfekt.errors %}
+      {% for error in form.perfekt.errors %}
+        <span class="form__input-error">{{ error|escape }}</span>
+      {% endfor %}
+    {% endif %}
+  </p>
+  <p class="form__input-group form__input-group_type_sentence">
+    {{ form.sentence }}
+    {% if form.sentence.errors %}
+      {% for error in form.sentence.errors %}
+        <span class="form__input-error">{{ error|escape }}</span>
+      {% endfor %}
+    {% endif %}
+  </p>
+</article>

@@ -1,0 +1,16 @@
+<article class="form">
+  <header class="form__header">
+    <p class="form__word-text">
+      {{ word.text }}
+    </p>
+  </header>
+
+  <p class="form__input-group form__input-group_type_sentence">
+      {{ form.sentence }}
+      {% if form.sentence.errors %}
+        {% for error in form.sentence.errors %}
+          <span class="form__input-error">{{ error|escape }}</span>
+        {% endfor %}
+      {% endif %}
+  </p>
+</article>

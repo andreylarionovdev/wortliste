@@ -10,16 +10,13 @@
   {% endif %}
   <form action="{% url 'check_word' word.id %}" method="POST">
     {% csrf_token %}
-    <h2>
-      {% if word.is_noun %}
-        <input type="text" name="artikel">, {{ word.text }}, <input type="text" name="plural_ending">
-      {% else %}
-        {{ word.text }}
-      {% endif %}
-    </h2>
-    <p>
-      <textarea cols="50" rows="10" name="sentence"></textarea>
-    </p>
+    {% if word.is_noun %}
+      {% include 'quiz/widgets/noun-form.html' with form=form word=word %}
+    {% elif word.is_verb %}
+      {% include 'quiz/widgets/verb-form.html' with form=form word=word %}
+    {% else %}
+      {% include 'quiz/widgets/base-word-form.html' with form=form word=word %}
+    {% endif %}
     <p>
       <input type="submit" value="Check">
       <a href="{% url 'word_detail' word.id %}">Hint</a>

@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.db.models.functions import Lower
 from django.urls import reverse
-from .models import Word, Sentence
+from .models import Word, Sentence, VerbForm
+from .forms.BaseWordForm import BaseWordForm
+from .forms.NounWordForm import NounWordForm
+from .forms.VerbWordForm import VerbWordForm
 
 
 def index(request):
@@ -18,29 +21,72 @@ def word_detail(request, word_id):
     return render(request, 'quiz/word-detail.html', context)
 
 
+def get_form(word, data=None):
+    if word.is_noun():
+        return NounWordForm(data) if data is not None else NounWordForm()
+    elif word.is_verb():
+        return VerbWordForm(data) if data is not None else VerbWordForm()
+    return BaseWordForm(data) if data is not None else BaseWordForm()
+
+
+def validate_word_form(word, form):
+    is_valid = True
+    default_message = 'Does not match!'
+
+    try:
+        Sentence.objects.get(word=word, text=form.cleaned_data['sentence'])
+    except Sentence.DoesNotExist:
+        form.add_error('sentence', default_message)
+        is_valid = False
+
+    if word.is_noun():
+        if word.artikel.text != str(form.cleaned_data['artikel']):
+            form.add_error('artikel', default_message)
+            is_valid = False
+        if word.plural_ending != form.cleaned_data['plural_ending']:
+            form.add_error('plural_ending', default_message)
+            is_valid = False
+
+    if word.is_verb():
+        try:
+            Word.objects.get(verb_inf=word,
+                             text=form.cleaned_data['praesens'],
+                             verb_form=VerbForm.objects.get(name='Präsens'))
+        except Word.DoesNotExist:
+            form.add_error('praesens', default_message)
+            is_valid = False
+
+        try:
+            Word.objects.get(verb_inf=word,
+                             text=form.cleaned_data['praeteritum'],
+                             verb_form=VerbForm.objects.get(name='Präteritum'))
+        except Word.DoesNotExist:
+            form.add_error('praeteritum', default_message)
+            is_valid = False
+
+        try:
+            Word.objects.get(verb_inf=word,
+                             text=form.cleaned_data['perfekt'],
+                             verb_form=VerbForm.objects.get(name='Perfekt'))
+        except Word.DoesNotExist:
+            form.add_error('perfekt', default_message)
+            is_valid = False
+
+    return is_valid
+
+
 def check_word(request, word_id):
     word = get_object_or_404(Word, pk=word_id)
-    context = {'word': word}
-    try:
-        # POST validation
-        Sentence.objects.get(word=word, text=request.POST['sentence'])
-        if word.is_noun():
-            artikel = request.POST['artikel']
-            plural_ending = request.POST['plural_ending']
-            word = Word.objects.get(id=word_id)
-            if (word.artikel.text != artikel) or (word.plural_ending != plural_ending):
-                raise Word.DoesNotExist
-    except KeyError:
-        # GET
-        return render(request, 'quiz/check-word.html', context)
-    except (Sentence.DoesNotExist, Word.DoesNotExist):
-        # POST with validation error
-        context['error_message'] = 'noch einmal!'
-        return render(request, 'quiz/check-word.html', context)
+    if request.method == 'POST':
+        form = get_form(word, request.POST)
+        if form.is_valid():
+            if validate_word_form(word, form):
+                next_word = get_next_word_for_check(word)
+                return HttpResponseRedirect(reverse('check_word', args=(next_word.id,)))
     else:
-        # POST without validation error
-        next_word = get_next_word_for_check(word)
-        return HttpResponseRedirect(reverse('check_word', args=(next_word.id,)))
+        form = get_form(word)
+
+    return render(request, 'quiz/check-word.html', {'form': form, 'word': word})
 
 
 def get_next_word_for_check(word):

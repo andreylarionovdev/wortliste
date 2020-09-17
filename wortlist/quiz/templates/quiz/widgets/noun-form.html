@@ -1,0 +1,32 @@
+<article class="form form_type_noun">
+  <header class="form__header">
+    <p class="form__input-group form__input-group_type_artikel">
+      {{ form.artikel }}
+      {% if form.artikel.errors %}
+        {% for error in form.artikel.errors %}
+          <span class="form__input-error">{{ error|escape }}</span>
+        {% endfor %}
+      {% endif %}
+    </p>
+    <p class="form__word-text">
+      {{ word.text }}
+    </p>
+    ,
+    <p class="form__input-group form__input-group_type_plural-ending">
+      {{ form.plural_ending }}
+      {% if form.plural_ending.errors %}
+        {% for error in form.plural_ending.errors %}
+          <span class="form__input-error">{{ error|escape }}</span>
+        {% endfor %}
+      {% endif %}
+    </p>
+  </header>
+  <p class="form__input-group form__input-group_type_instance">
+    {{ form.sentence }}
+    {% if form.sentence.errors %}
+      {% for error in form.sentence.errors %}
+        <span class="form__input-error">{{ error|escape }}</span>
+      {% endfor %}
+    {% endif %}
+  </p>
+</article>

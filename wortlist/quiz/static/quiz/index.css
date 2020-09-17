@@ -4,7 +4,8 @@ html {
   color: rgb(53, 54, 58);
 }
 textarea,
-input {
+input,
+select {
   font-family: 'Courier New', Arial;
   font-size: 16px;
   background: rgb(232, 220, 222);
@@ -14,10 +15,10 @@ ul {
   list-style: none;
 }
 a {
-  color: rgb(107, 72, 77)
+  color: rgb(153, 102, 110);
 }
 a:hover {
-  color: rgb(153, 102, 110);
+  color: rgb(107, 72, 77)
 }
 
 @media(prefers-color-scheme: dark) {
@@ -26,8 +27,31 @@ a:hover {
     color: rgb(232, 220, 222);
   }
   textarea,
-  input {
+  input,
+  select {
     background: rgb(79, 75, 65);
     color: rgb(232, 220, 222);
   }
+}
+.form {
+  min-width: 320px;
+  max-width: 680px;
+}
+.form__header {
+  font-size: 24px;
+  min-height: 118px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.form__input {
+  padding: 10px;
+  width: 100%;
+}
+.form__word-text {
+  margin: 0 12px;
+}
+.form__input-error {
+  font-size: 12px;
+  color: red;
 }
