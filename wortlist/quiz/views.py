@@ -15,7 +15,11 @@ def index(request):
 def word_detail(request, word_id):
     word = get_object_or_404(Word, pk=word_id)
     sentences = Sentence.objects.filter(word=word)
-    context = {'word': word, 'sentences': sentences}
+    context = {
+        'word': word,
+        'sentences': sentences,
+        'is_superuser': request.user.is_superuser,
+    }
     if word.is_verb():
         context['verb_forms'] = Word.objects.filter(verb_inf=word)
     return render(request, 'quiz/word-detail.html', context)
@@ -80,6 +84,7 @@ def check_word(request, word_id):
     if request.method == 'POST':
         form = get_form(word, request.POST)
         if form.is_valid():
+            # TODO: Move validation method to Form class
             if validate_word_form(word, form):
                 next_word = get_next_word_for_check(word)
                 return HttpResponseRedirect(reverse('check_word', args=(next_word.id,)))

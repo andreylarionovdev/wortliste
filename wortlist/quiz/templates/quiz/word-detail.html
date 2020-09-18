@@ -21,16 +21,24 @@
     </h1>
     {% if word.category.name == 'verb' %}
       <p>
-        {% for verb_form in verb_forms %}
-          {{ verb_form.text }},
-        {% endfor %}
+        <ul>
+          {% for verb_form in verb_forms %}
+            <li>
+              <span>{{ verb_form.text }}</span>
+              <a href="{% url 'admin:quiz_word_change' verb_form.id %}">Edit</a>
+            </li>
+          {% endfor %}
+        </ul>
       </p>
     {% endif %}
     <ol>
       {% if sentences|length > 0 %}
         {% for sentence in sentences %}
           <li>
-            {{ sentence.text }}.
+            <span>{{ sentence.text }}</span>
+            {% if is_superuser %}
+              <a class="card__edit-button" href="{% url 'admin:quiz_sentence_change' sentence.id %}">Edit</a>
+            {% endif %}
           </li>
         {% endfor %}
       {% endif %}
@@ -38,6 +46,9 @@
     <p>
       <a href="{% url 'index' %}"><<</a>
       <a href="{% url 'check_word' word.id %}">Challenge</a>
+      {% if is_superuser %}
+        <a class="card__edit-button" href="{% url 'admin:quiz_word_change' word.id %}">Edit</a>
+      {% endif %}
     </p>
   </article>
 {% endblock %}

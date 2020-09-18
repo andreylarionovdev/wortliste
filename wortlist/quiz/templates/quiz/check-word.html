@@ -8,7 +8,7 @@
   {% if error_message %}
     <p>{{ error_message }}</p>
   {% endif %}
-  <form action="{% url 'check_word' word.id %}" method="POST">
+  <form action="{% url 'check_word' word.id %}" method="POST" autocomplete="off">
     {% csrf_token %}
     {% if word.is_noun %}
       {% include 'quiz/widgets/noun-form.html' with form=form word=word %}
@@ -18,7 +18,7 @@
       {% include 'quiz/widgets/base-word-form.html' with form=form word=word %}
     {% endif %}
     <p>
-      <input type="submit" value="Check">
+      <input type="submit" value="Check" accesskey="s">
       <a href="{% url 'word_detail' word.id %}">Hint</a>
     </p>
   </form>
