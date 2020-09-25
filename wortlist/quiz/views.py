@@ -17,6 +17,8 @@ def word_detail(request, word_id):
     sentences = Sentence.objects.filter(word=word)
     context = {
         'word': word,
+        'prev_word': get_prev_word(word),
+        'next_word': get_next_word(word),
         'sentences': sentences,
         'is_superuser': request.user.is_superuser,
     }
@@ -86,7 +88,7 @@ def check_word(request, word_id):
         if form.is_valid():
             # TODO: Move validation method to Form class
             if validate_word_form(word, form):
-                next_word = get_next_word_for_check(word)
+                next_word = get_next_word(word)
                 return HttpResponseRedirect(reverse('check_word', args=(next_word.id,)))
     else:
         form = get_form(word)
@@ -94,8 +96,15 @@ def check_word(request, word_id):
     return render(request, 'quiz/check-word.html', {'form': form, 'word': word})
 
 
-def get_next_word_for_check(word):
+def get_next_word(word):
     word = Word.objects.filter(verb_inf=None, id__gt=word.id).first()
     if not word:
         return Word.objects.filter(verb_inf=None).first()
+    return word
+
+
+def get_prev_word(word):
+    word = Word.objects.filter(verb_inf=None, id__lt=word.id).last()
+    if not word:
+        return Word.objects.filter(verb_inf=None).last()
     return word

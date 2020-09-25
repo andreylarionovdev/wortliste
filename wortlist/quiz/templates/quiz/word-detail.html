@@ -45,7 +45,10 @@
     </ol>
     <p>
       <a href="{% url 'index' %}"><<</a>
+      <a href="{% url 'word_detail' prev_word.id %}"><</a>
       <a href="{% url 'check_word' word.id %}">Challenge</a>
+      <a href="{% url 'word_detail' next_word.id %}">></a>
+      <a href="{% url 'index' %}">>></a>
       {% if is_superuser %}
         <a class="card__edit-button" href="{% url 'admin:quiz_word_change' word.id %}">Edit</a>
       {% endif %}
