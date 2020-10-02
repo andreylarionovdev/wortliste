@@ -107,3 +107,6 @@ media/
 *.pyc
 *.db
 *.pid
+
+# node
+node_modules/

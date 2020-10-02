@@ -31,10 +31,10 @@
         </ul>
       </p>
     {% endif %}
-    <ol>
+    <ol class="card__sentences">
       {% if sentences|length > 0 %}
         {% for sentence in sentences %}
-          <li>
+          <li class="card__sentence">
             <span>{{ sentence.text }}</span>
             {% if is_superuser %}
               <a class="card__edit-button" href="{% url 'admin:quiz_sentence_change' sentence.id %}">Edit</a>

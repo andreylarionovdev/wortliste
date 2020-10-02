@@ -32,7 +32,7 @@ class Artikel(models.Model):
 class Word(models.Model):
     def __str__(self):
         artikel = f", {self.artikel.text}" if self.artikel else ""
-        return f"{self.text}{artikel} - {self.translate}"
+        return f"{self.text}{artikel}"
 
     text = models.CharField(max_length=500)
     artikel = models.ForeignKey(Artikel, on_delete=models.CASCADE, null=True, blank=True)
@@ -42,7 +42,7 @@ class Word(models.Model):
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     category = models.ForeignKey(WordCategory, on_delete=models.CASCADE)
     verb_form = models.ForeignKey(VerbForm, on_delete=models.CASCADE, null=True, blank=True)
-    verb_inf = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    verb_inf = models.ForeignKey('self', related_name='verbs', on_delete=models.CASCADE, null=True, blank=True)
 
     def is_noun(self):
         return self.category.name == 'noun'
@@ -53,7 +53,7 @@ class Word(models.Model):
 
 class Sentence(models.Model):
     def __str__(self):
-        return f"{self.word} - {self.text}"
+        return self.text
 
     text = models.TextField()
-    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    word = models.ForeignKey(Word, related_name='sentences', on_delete=models.CASCADE)
