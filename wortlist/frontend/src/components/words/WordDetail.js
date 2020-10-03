@@ -1,12 +1,35 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 export class WordDetail extends Component {
   static propTypes = {
     word: PropTypes.object.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+    this._handleKeydown = this._handleKeydown.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this._handleKeydown);
+  }
+
+  _handleKeydown(e) {
+    const word = this.props.word;
+    switch (e.key) {
+      case 'n':
+        this.props.history.push(`/word/${word.nextId}`);
+        break;
+      case 'p':
+        this.props.history.push(`/word/${word.prevId}`);
+        break;
+      default:
+        return;
+    }
+  }
 
   render() {
     const word = this.props.word;
@@ -47,9 +70,9 @@ export class WordDetail extends Component {
           {sentences}
         </ol>
         <p className="card__nav">
-          <Link className="card__nav-button" to={`/word/${word.prevId}`}>{'< Prev'}</Link>
+          <Link className="card__nav-button" to={`/word/${word.prevId}`}>{'< Prev (p)'}</Link>
           |
-          <Link className="card__nav-button" to={`/word/${word.nextId}`}>{'Next >'}</Link>
+          <Link className="card__nav-button" to={`/word/${word.nextId}`}>{'Next (n) >'}</Link>
         </p>
       </article>
     )
