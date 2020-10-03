@@ -6,8 +6,8 @@ import {
   Route,
 } from 'react-router-dom';
 
-import WordList from './quiz/WordList';
-import WordDetail from './quiz/WordDetail';
+import WordList from './words/WordList';
+import WordDetail from './words/WordDetail';
 import Header from './layout/Header';
 
 import { Provider } from 'react-redux';

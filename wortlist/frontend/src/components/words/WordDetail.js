@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export class WordDetail extends Component {
   static propTypes = {
@@ -45,6 +46,11 @@ export class WordDetail extends Component {
         <ol className="card__sentences">
           {sentences}
         </ol>
+        <p className="card__nav">
+          <Link className="card__nav-button" to={`/word/${word.prevId}`}>{'< Prev'}</Link>
+          |
+          <Link className="card__nav-button" to={`/word/${word.nextId}`}>{'Next >'}</Link>
+        </p>
       </article>
     )
   }
@@ -52,9 +58,15 @@ export class WordDetail extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.word_id;
-  return {
-    word: state.words.words.find(word => parseInt(word.id, 10) === parseInt(id, 10))
-  }
+  const words = state.words.words;
+
+  const word = words.find(word => parseInt(word.id, 10) === parseInt(id, 10));
+  const index = words.indexOf(word);
+
+  word.prevId = words.indexOf(words[index - 1]) > -1 ? words[index - 1].id : words[words.length - 1].id;
+  word.nextId = words.indexOf(words[index + 1]) > -1 ? words[index + 1].id : words[0].id;
+
+  return { word };
 };
 
 export default connect(mapStateToProps)(WordDetail);
