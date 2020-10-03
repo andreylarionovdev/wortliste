@@ -6,26 +6,38 @@ import {
   Route,
 } from 'react-router-dom';
 
+import { Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
+
 import WordList from './words/WordList';
 import WordDetail from './words/WordDetail';
 import Header from './layout/Header';
+import Alerts from './layout/Alerts';
 
 import { Provider } from 'react-redux';
 import store from '../store';
+
+const alertOptions = {
+  timeout: 3000,
+  position: 'top center',
+};
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Fragment>
-          <Header></Header>
-          <Router>
-            <Switch>
-              <Route path='/word/:word_id' component={WordDetail} />
-              <Route path='/' component={WordList} />
-            </Switch>
-          </Router>
-        </Fragment>
+        <AlertProvider template={AlertTemplate} {...alertOptions}>
+          <Fragment>
+            <Header />
+            <Alerts />
+            <Router>
+              <Switch>
+                <Route path='/word/:word_id' component={WordDetail} />
+                <Route path='/' component={WordList} />
+              </Switch>
+            </Router>
+          </Fragment>
+        </AlertProvider>
       </Provider>
     )
   }

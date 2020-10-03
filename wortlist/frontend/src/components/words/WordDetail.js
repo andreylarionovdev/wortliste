@@ -20,10 +20,10 @@ export class WordDetail extends Component {
   _handleKeydown(e) {
     const word = this.props.word;
     switch (e.key) {
-      case 'n':
+      case 'l':
         this.props.history.push(`/word/${word.nextId}`);
         break;
-      case 'p':
+      case 'j':
         this.props.history.push(`/word/${word.prevId}`);
         break;
       default:
@@ -70,9 +70,9 @@ export class WordDetail extends Component {
           {sentences}
         </ol>
         <p className="card__nav">
-          <Link className="card__nav-button" to={`/word/${word.prevId}`}>{'< Prev (p)'}</Link>
+          <Link className="card__nav-button" to={`/word/${word.prevId}`}>{'< Prev (j)'}</Link>
           |
-          <Link className="card__nav-button" to={`/word/${word.nextId}`}>{'Next (n) >'}</Link>
+          <Link className="card__nav-button" to={`/word/${word.nextId}`}>{'Next (l) >'}</Link>
         </p>
       </article>
     )
