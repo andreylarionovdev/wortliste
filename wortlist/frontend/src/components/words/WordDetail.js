@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export class WordDetail extends Component {
   static propTypes = {
@@ -17,14 +17,26 @@ export class WordDetail extends Component {
     document.addEventListener('keydown', this._handleKeydown);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this._handleKeydown);
+  }
+
   _handleKeydown(e) {
     const word = this.props.word;
+
+    const PREV_KEY = 'a';
+    const NEXT_KEY = 'd';
+    const CHALLENGE_KEY = 'w';
+
     switch (e.key) {
-      case 'l':
+      case PREV_KEY:
+        this.props.history.push(`/word/${word.prevId}`);
+        break;
+      case NEXT_KEY:
         this.props.history.push(`/word/${word.nextId}`);
         break;
-      case 'j':
-        this.props.history.push(`/word/${word.prevId}`);
+      case CHALLENGE_KEY:
+        this.props.history.push(`/word/check/${word.id}`);
         break;
       default:
         return;
@@ -42,7 +54,14 @@ export class WordDetail extends Component {
     for (const [index, sentence] of word.sentences.entries()) {
       sentences.push(
         <li key={index} className="card__sentence">
-          <span>{sentence}</span>
+          <span>{sentence.text}</span>
+          <a
+            className="card__edit-link"
+            href={sentence.change_url}
+            target="_blank"
+          >
+            Edit
+          </a>
         </li>
       )
     }
@@ -61,7 +80,14 @@ export class WordDetail extends Component {
     return (
       <article className="card">
         <h1 className="card__header">
-          {headerText}
+          <span>{headerText}</span>
+          <a
+            className="card__edit-link"
+            href={word.change_url}
+            target="_blank"
+          >
+            Edit
+          </a>
         </h1>
         <ul>
           {verbs}
@@ -70,9 +96,11 @@ export class WordDetail extends Component {
           {sentences}
         </ol>
         <p className="card__nav">
-          <Link className="card__nav-button" to={`/word/${word.prevId}`}>{'< Prev (j)'}</Link>
+          <Link className="card__nav-button" to={`/word/${word.prevId}`}>{'< Prev (a)'}</Link>
           |
-          <Link className="card__nav-button" to={`/word/${word.nextId}`}>{'Next (l) >'}</Link>
+          <Link className="card__nav-button" to={`/word/check/${word.id}`}>{'Challenge (w)'}</Link>
+          |
+          <Link className="card__nav-button" to={`/word/${word.nextId}`}>{'Next (d) >'}</Link>
         </p>
       </article>
     )

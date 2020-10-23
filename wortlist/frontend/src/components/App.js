@@ -11,6 +11,7 @@ import AlertTemplate from 'react-alert-template-basic';
 
 import WordList from './words/WordList';
 import WordDetail from './words/WordDetail';
+import WordForm from './words/WordForm';
 import Header from './layout/Header';
 import Alerts from './layout/Alerts';
 
@@ -32,6 +33,7 @@ class App extends Component {
             <Alerts />
             <Router>
               <Switch>
+                <Route path='/word/check/:word_id' component={WordForm} />
                 <Route path='/word/:word_id' component={WordDetail} />
                 <Route path='/' component={WordList} />
               </Switch>

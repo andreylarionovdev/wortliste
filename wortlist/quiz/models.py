@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Language(models.Model):
@@ -49,11 +50,17 @@ class Word(models.Model):
 
     def is_verb(self):
         return self.category.name == 'verb'
+    
+    def get_admin_change_url(self):
+        return reverse('admin:quiz_word_change', args=[str(self.id)])
 
 
 class Sentence(models.Model):
     def __str__(self):
         return self.text
+
+    def get_admin_change_url(self):
+        return reverse('admin:quiz_sentence_change', args=[str(self.id)])
 
     text = models.TextField()
     word = models.ForeignKey(Word, related_name='sentences', on_delete=models.CASCADE)
