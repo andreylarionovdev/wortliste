@@ -2,13 +2,6 @@ from django.db import models
 from django.urls import reverse
 
 
-class Language(models.Model):
-    def __str__(self):
-        return self.name
-
-    name = models.CharField(max_length=3)
-
-
 class WordCategory(models.Model):
     def __str__(self):
         return self.name
@@ -40,7 +33,6 @@ class Word(models.Model):
     plural_ending = models.CharField(max_length=10, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
     translate = models.CharField(max_length=500, blank=True)
-    language = models.ForeignKey(Language, on_delete=models.CASCADE)
     category = models.ForeignKey(WordCategory, on_delete=models.CASCADE)
     verb_form = models.ForeignKey(VerbForm, on_delete=models.CASCADE, null=True, blank=True)
     verb_inf = models.ForeignKey('self', related_name='verbs', on_delete=models.CASCADE, null=True, blank=True)
