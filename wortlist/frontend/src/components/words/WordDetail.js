@@ -71,7 +71,7 @@ export class WordDetail extends Component {
       for (const [index, verb] of word.verbs.entries()) {
         verbs.push(
           <li key={index}>
-            <span>{verb}</span>
+            <span>{verb.text}</span>
           </li>
         );
       }
