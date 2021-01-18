@@ -13,10 +13,13 @@ import WordList from './words/WordList';
 import WordDetail from './words/WordDetail';
 import WordForm from './words/WordForm';
 import Header from './layout/Header';
+// import PageNotFound from './layout/PageNotFound';
 
 import { Provider } from 'react-redux';
 import store from '../store';
 import Alerts from './layout/Alerts';
+
+import './App.scss';
 
 const alertOptions = {
   timeout: 3000,
