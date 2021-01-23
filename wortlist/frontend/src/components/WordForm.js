@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { GET_ERRORS } from '../../actions/types';
+import { GET_ERRORS } from '../actions/types';
 
 export class WordForm extends Component {
   static propTypes = {

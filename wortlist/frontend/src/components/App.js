@@ -9,15 +9,15 @@ import {
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 
-import WordList from './words/WordList';
-import WordDetail from './words/WordDetail';
-import WordForm from './words/WordForm';
-import Header from './layout/Header';
-// import PageNotFound from './layout/PageNotFound';
+import WordList from './WordList';
+import WordDetail from './WordDetail';
+import WordForm from './WordForm';
+import Header from './Header';
+import PageNotFound from './PageNotFound';
 
 import { Provider } from 'react-redux';
 import store from '../store';
-import Alerts from './layout/Alerts';
+import Alerts from './Alerts';
 
 import './App.scss';
 
@@ -39,7 +39,8 @@ class App extends Component {
               <Switch>
                 <Route path='/word/check/:word_id' component={WordForm} />
                 <Route path='/word/:word_id' component={WordDetail} />
-                <Route path='/' component={WordList} />
+                <Route exact path='/' component={WordList} />
+                <Route exact path='*' component={PageNotFound} />
               </Switch>
             </Router>
           </Fragment>
