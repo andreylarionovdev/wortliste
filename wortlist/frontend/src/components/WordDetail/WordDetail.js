@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { getWord } from '../actions/words';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import { getWord, getNextWord, getPrevWord } from '../../actions/words';
+
+import './WordDetail.scss';
 
 const WordDetail = () => {
   const [word, setWord] = useState({
@@ -8,7 +10,7 @@ const WordDetail = () => {
     sentences: [],
     verbs: [],
   });
-  const { word_id: wordId } = useParams();
+  const { wordId } = useParams();
 
   const headerText = word.category == 'noun'
     ? `${word.artikel}, ${word.text}, -${word.plural_ending}`
@@ -20,12 +22,22 @@ const WordDetail = () => {
     getWord(wordId).then(response => setWord(response));
   }, [wordId]);
 
+  const history = useHistory();
+
+  const handlePrevBtnClick = () => {
+    getNextWord(wordId, { dir: 'prev' }).then(response => history.push(`/word/${response.id}`));
+  };
+
+  const handleNextBtnClick = () => {
+    getNextWord(wordId).then(response => history.push(`/word/${response.id}`));
+  };
+
   return (
-    <article className="card">
-      <h1 className="card__header">
+    <article className="word-detail">
+      <h1 className="word-detail__header">
         <span>{headerText}</span>
         <a
-          className="card__edit-link"
+          className="word-detail__edit-link"
           href={word.change_url}
           target="_blank"
         >
@@ -41,12 +53,12 @@ const WordDetail = () => {
           )
         })}
       </ul>
-      <ol className="card__sentences">
+      <ol className="word-detail__sentences">
         {word.sentences.map((sentence, index) => {
-          return (<li key={index} className="card__sentence">
+          return (<li key={index} className="word-detail__sentence">
             <span>{sentence.text}</span>
             <a
-              className="card__edit-link"
+              className="word-detail__edit-link"
               href={sentence.change_url}
               target="_blank"
             >
@@ -55,12 +67,12 @@ const WordDetail = () => {
           </li>)
         })}
       </ol>
-      <p className="card__nav">
-        <Link className="card__nav-button" to={`/word/${word.prevId}`}>{'< Prev (a)'}</Link>
+      <p className="word-detail__nav">
+        <button className="word-detail__nav-button" onClick={handlePrevBtnClick}>{'< Prev (a)'}</button>
         |
-        <Link className="card__nav-button" to={`/word/check/${word.id}`}>{'Challenge (w)'}</Link>
+        <Link className="word-detail__nav-button" to={`/word/check/${word.id}`}>{'Challenge (w)'}</Link>
         |
-        <Link className="card__nav-button" to={`/word/${word.next_id}`}>{'Next (d) >'}</Link>
+        <button className="word-detail__nav-button" onClick={handleNextBtnClick}>{'Next (d) >'}</button>
       </p>
     </article>
   );
@@ -120,10 +132,10 @@ export default WordDetail;
 //     const sentences = [];
 //     for (const [index, sentence] of word.sentences.entries()) {
 //       sentences.push(
-//         <li key={index} className="card__sentence">
+//         <li key={index} className="word-detail__sentence">
 //           <span>{sentence.text}</span>
 //           <a
-//             className="card__edit-link"
+//             className="word-detail__edit-link"
 //             href={sentence.change_url}
 //             target="_blank"
 //           >
@@ -146,10 +158,10 @@ export default WordDetail;
 
 //     return (
 //       <article className="card">
-//         <h1 className="card__header">
+//         <h1 className="word-detail__header">
 //           <span>{headerText}</span>
 //           <a
-//             className="card__edit-link"
+//             className="word-detail__edit-link"
 //             href={word.change_url}
 //             target="_blank"
 //           >
@@ -159,15 +171,15 @@ export default WordDetail;
 //         <ul>
 //           {verbs}
 //         </ul>
-//         <ol className="card__sentences">
+//         <ol className="word-detail__sentences">
 //           {sentences}
 //         </ol>
-//         <p className="card__nav">
-//           <Link className="card__nav-button" to={`/word/${word.prevId}`}>{'< Prev (a)'}</Link>
+//         <p className="word-detail__nav">
+//           <Link className="word-detail__nav-button" to={`/word/${word.prevId}`}>{'< Prev (a)'}</Link>
 //           |
-//           <Link className="card__nav-button" to={`/word/check/${word.id}`}>{'Challenge (w)'}</Link>
+//           <Link className="word-detail__nav-button" to={`/word/check/${word.id}`}>{'Challenge (w)'}</Link>
 //           |
-//           <Link className="card__nav-button" to={`/word/${word.nextId}`}>{'Next (d) >'}</Link>
+//           <Link className="word-detail__nav-button" to={`/word/${word.nextId}`}>{'Next (d) >'}</Link>
 //         </p>
 //       </article>
 //     )

@@ -1,3 +1,43 @@
+/* https://gist.github.com/MoOx/9137295 */
+.word-detail {
+  padding: 40px 0; }
+  .word-detail__header {
+    font-size: 38px; }
+  .word-detail__sentences {
+    padding: 20px 0;
+    line-height: 32px;
+    list-style: decimal inside; }
+  .word-detail__nav-button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
+    cursor: pointer;
+    margin: 0 4px;
+    text-decoration: none;
+    color: #99666e; }
+    .word-detail__nav-button:hover {
+      color: #6b484d; }
+  .word-detail__edit-link {
+    font-size: 13px;
+    margin-left: 18px; }
+
+.header__logo {
+  text-decoration: none;
+  font-weight: bold; }
+
 html {
   font-family: 'Courier New', Arial;
   background: #e8dcde;
@@ -19,9 +59,8 @@ ul {
 a {
   text-decoration: none;
   color: #99666e; }
-
-a:hover {
-  color: #6b484d; }
+  a:hover {
+    color: #6b484d; }
 
 @media (prefers-color-scheme: dark) {
   html {
@@ -32,10 +71,6 @@ a:hover {
   select {
     background: #4f4b41;
     color: #e8dcde; } }
-
-.header__logo {
-  text-decoration: none;
-  font-weight: bold; }
 
 .content {
   max-width: 960px;
@@ -68,24 +103,8 @@ a:hover {
   font-size: 12px;
   color: red; }
 
-.card {
-  padding: 40px 0; }
-
-.card__header {
-  font-size: 38px; }
-
-.card__sentences {
-  padding: 20px 0;
-  line-height: 32px;
-  list-style: decimal inside; }
-
-.card__nav-button,
 .form__nav-button {
   cursor: pointer;
   margin: 0 4px;
   text-decoration: none; }
-
-.card__edit-link {
-  font-size: 13px;
-  margin-left: 18px; }
 

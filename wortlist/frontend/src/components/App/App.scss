@@ -1,0 +1,83 @@
+@import '../../util/vars.scss';
+
+html {
+  font-family: 'Courier New', Arial;
+  background: rgb(232, 220, 222);
+  color: rgb(53, 54, 58);
+  font-size: 20px;
+}
+
+textarea,
+input,
+select {
+  font-family: 'Courier New', Arial;
+  font-size: 18px;
+  padding: 10px;
+  background: rgb(232, 220, 222);
+  color: rgb(53, 54, 58);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: $font-color-primary;
+  &:hover {
+    color: $font-color-hovered;
+  }
+}
+
+@media(prefers-color-scheme: dark) {
+  html {
+    background: rgb(53, 54, 58);
+    color: rgb(232, 220, 222);
+  }
+
+  textarea,
+  input,
+  select {
+    background: rgb(79, 75, 65);
+    color: rgb(232, 220, 222);
+  }
+}
+
+.content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.form {
+  min-width: 320px;
+  max-width: 680px;
+}
+
+.form__header {
+  font-size: 24px;
+  min-height: 118px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.form__input {
+  padding: 10px;
+  width: 100%;
+}
+
+.form__word-text {
+  margin: 0 12px;
+}
+
+.form__input-error {
+  font-size: 12px;
+  color: red;
+}
+
+.form__nav-button {
+  cursor: pointer;
+  margin: 0 4px;
+  text-decoration: none;
+}

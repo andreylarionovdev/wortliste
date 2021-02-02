@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getWords } from '../actions/words';
+import { getWords } from '../../actions/words';
 
 const WordList = () => {
   const [words, setWords] = useState([]);

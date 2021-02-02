@@ -1,0 +1,32 @@
+@import '../../util/mixins.scss';
+@import '../../util/vars.scss';
+
+.word-detail {
+  padding: 40px 0;
+
+  &__header {
+    font-size: 38px;
+  }
+
+  &__sentences {
+    padding: 20px 0;
+    line-height: 32px;
+    list-style: decimal inside;
+  }
+
+  &__nav-button {
+    @include reset-button;
+    cursor: pointer;
+    margin: 0 4px;
+    text-decoration: none;
+    color: $font-color-primary;
+    &:hover {
+      color: $font-color-hovered;
+    }
+  }
+
+  &__edit-link {
+    font-size: 13px;
+    margin-left: 18px;
+  }
+}

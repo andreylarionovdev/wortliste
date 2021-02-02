@@ -1,4 +1,4 @@
-# from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.db.models.functions import Lower
 # from django.urls import reverse
 # from .models import Word, Sentence, VerbForm
@@ -31,6 +31,23 @@ def reorder_words(request):
         word.order_id = i
         word.save()
     return Response({'rows_affected': i}, status=status.HTTP_201_CREATED)
+
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def fetch_next_word(request, pk):
+    data = request.data
+    try:
+        current_word = Word.objects.get(pk=pk)
+        order_id = current_word.order_id
+        next_id = order_id - 1 if data.get('dir') == 'prev' else order_id + 1
+        next_word = Word.objects.get(order_id=next_id)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = WordSerializer(next_word)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
     # def index(request):
     #     words = Word.objects.filter(verb_inf=None).order_by(Lower('text'))
